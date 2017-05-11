@@ -1,46 +1,89 @@
 <!doctype html>
 <html>
 <head>
-<title>Websocket</title>
-<script src="http://code.jquery.com/jquery-2.0.0.js"></script>
+    <style>
+        .center {
+            text-align: center;
+            margin: auto;
+            width: 60%;
+        }
+    </style>
+    <title>Obstacle Racing</title>
+    <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
+    <script>
+        $(document).ready(function () {
+            //change example.com with your IP or your host
+            var ws = new WebSocket("ws://Localhost:8888/ws");
+            ws.onopen = function(evt) {
+                var conn_status = document.getElementById('conn_text');
+                conn_status.innerHTML = "Connection status: Connected!"
+            };
+            ws.onmessage = function(evt) {
+                var pelota1 = document.getElementById("pelota1");
+                var pelota2 = document.getElementById("pelota2");
+                var obj = JSON.parse(evt.data);
+                var index = parseInt(obj.index);
+                message = JSON.parse(obj.msg);  // con esto consigo obtener un array en js
+                var position1 = 10 + 20*parseInt(message[0]);
+                var position2 = 410 + 20*parseInt(message[1]);
+                pelota1.setAttribute("cx", position1);
+                pelota2.setAttribute("cx", position2);
+
+            };
+            ws.onclose = function(evt) {
+                alert ("Connection closed");
+            };
+            document.onkeydown = checkPress;
+            function checkPress(evt) {
+                evt = evt || event;
+                if (evt.keyCode == 37) {
+                    evt.preventDefault();
+                    var message = 'L';
+                    var str1 = `{"msg": "${message || 'default'}" }`;
+                    ws.send(str1);
+                }
+                if (evt.keyCode == 39) {
+                    var message = 'R';
+                    <!--With this line the dict format is constructed-->
+                    <!--note that the ` is crucial-->
+                    var str1 = `{"msg": "${message || 'default'}" }`;
+                    ws.send(str1);
+                }
+                if (evt.keyCode == 32) {
+                    var text1 = document.getElementById("text1");
+                    text1.style.color = "white";
+                    var message = 'play';
+                    var str1 = `{"go": "${message || 'default'}" }`;
+                    ws.send(str1);
+                }
+            }
+
+        });
+
+    </script>
 </head>
 <body>
-<h1>Websocket</h1>
-<label id="conn_text"></label><br />
-<input type="submit" id="button1" value="Left" /><br />
-<input type="submit" id="button2" value="Right" /><br />
-<div id="messages_txt" />
-<script>
-  $(document).ready(function () {
-    //change example.com with your IP or your host
-    var ws = new WebSocket("ws://192.168.1.133:8888/ws");
-    ws.onopen = function(evt) {
-      var conn_status = document.getElementById('conn_text');
-      conn_status.innerHTML = "Connection status: Connected!"
-    };
-    ws.onmessage = function(evt) {
-      var newMessage = document.createElement('p');
-      var obj = JSON.parse(evt.data);
-      newMessage.textContent = obj.msg;
-      document.getElementById('messages_txt').appendChild(newMessage);
-    };
-    ws.onclose = function(evt) {
-      alert ("Connection closed");
-    };
-    $("#button1").click(function(evt) {
-      evt.preventDefault();
-      var message = 'L';
-      var str1 = `{"msg": "${message || 'default'}" }`;
-      ws.send(str1);
-    });
-    $("#button2").click(function(evt) {
-      evt.preventDefault();
-      var message = 'R';
-      <!--With this line the dict format is constructed-->
-      <!--note that the ` is crucial-->
-      var str1 = `{"msg": "${message || 'default'}" }`;
-      ws.send(str1);
-    });
-  });
-</script>
-</body></html>
+    <div class="center">
+        <h2>Obstacle Racing</h2>
+            <label id="conn_text"></label><br />
+        <object id="svg2" data="static/bluecar.svg" type="image/svg+xml">
+        </object>
+        <h3 id="text1">Pulse espacio para empezar</h3>
+    </div>
+    <div class="center">
+        <svg style="width:600px; height: 400px;">
+            <rect x="0"  y="0" width="200" height="400" fill=#D3D3D3 />
+            <rect x="400"  y="0" width="200" height="400" fill=#D3D3D3 />
+            <rect x="0"  y="0" width="20" height="400" fill=#66ff66 />
+            <rect x="180"  y="0" width="20" height="400" fill=#66ff66 />
+            <rect x="400"  y="0" width="20" height="400" fill=#66ff66 />
+            <rect x="580"  y="0" width="20" height="400" fill=#66ff66 />
+            <circle id="pelota1" cx="110" cy="290" r="10" fill="red" />
+            <circle id="pelota2" cx="510" cy="290" r="10" fill="yellow" />
+        </svg>
+    </div>
+
+
+
+</body>
+</html>
