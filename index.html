@@ -1,13 +1,8 @@
 <!doctype html>
 <html>
 <head>
-    <style>
-        .center {
-            text-align: center;
-            margin: auto;
-            width: 60%;
-        }
-    </style>
+
+    <link href="static/estilos.css" rel="stylesheet">
     <title>Obstacle Racing</title>
     <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
     <script>
@@ -19,15 +14,15 @@
                 conn_status.innerHTML = "Connection status: Connected!"
             };
             ws.onmessage = function(evt) {
-                var pelota1 = document.getElementById("pelota1");
-                var pelota2 = document.getElementById("pelota2");
+                var coche1 = document.getElementById("coche1");
+                var coche2 = document.getElementById("coche2");
                 var obj = JSON.parse(evt.data);
                 var index = parseInt(obj.index);
                 message = JSON.parse(obj.msg);  // con esto consigo obtener un array en js
-                var position1 = 10 + 20*parseInt(message[0]);
-                var position2 = 410 + 20*parseInt(message[1]);
-                pelota1.setAttribute("cx", position1);
-                pelota2.setAttribute("cx", position2);
+                var position1 = 20*parseInt(message[0]);
+                var position2 = 400 + 20*parseInt(message[1]);
+                coche1.style.left = position1 + "px";
+                coche2.style.left = position2 + "px";
 
             };
             ws.onclose = function(evt) {
@@ -66,21 +61,21 @@
     <div class="center">
         <h2>Obstacle Racing</h2>
             <label id="conn_text"></label><br />
-        <object id="svg2" data="static/bluecar.svg" type="image/svg+xml">
-        </object>
         <h3 id="text1">Pulse espacio para empezar</h3>
+
     </div>
-    <div class="center">
-        <svg style="width:600px; height: 400px;">
+    <div class="center" style="width:600px; height: 400px;">
+        <div id="coche1"><img src="static/bluecar.svg" type="image/svg+xml"/></div>
+        <div id="coche2"><img src="static/yellowcar.svg" type="image/svg+xml"/></div>
+        <svg style="width:600px; height: 400px; ">
             <rect x="0"  y="0" width="200" height="400" fill=#D3D3D3 />
             <rect x="400"  y="0" width="200" height="400" fill=#D3D3D3 />
             <rect x="0"  y="0" width="20" height="400" fill=#66ff66 />
             <rect x="180"  y="0" width="20" height="400" fill=#66ff66 />
             <rect x="400"  y="0" width="20" height="400" fill=#66ff66 />
             <rect x="580"  y="0" width="20" height="400" fill=#66ff66 />
-            <circle id="pelota1" cx="110" cy="290" r="10" fill="red" />
-            <circle id="pelota2" cx="510" cy="290" r="10" fill="yellow" />
         </svg>
+
     </div>
 
 
