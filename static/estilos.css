@@ -6,21 +6,21 @@
 
 .divcenter { /*https://www.w3schools.com/css/css_align.asp*/
     margin: auto;
-    width: 60%;
+    position: relative;
 }
 
 #coche1{
-    position:relative;
+    position: absolute;
     height:20px;
     width:20px;
     left:100px;
-    top:300px;
+    top:280px;
 }
 
 #coche2{
-    position:relative;
+    position:absolute;
     height:20px;
     width:20px;
     left:500px;
-    top:300px;
+    top:280px;
 }
