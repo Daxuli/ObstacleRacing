@@ -7,6 +7,7 @@
     <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
     <script>
         $(document).ready(function () {
+            var mapa;
             //change example.com with your IP or your host
             var ws = new WebSocket("ws://Localhost:8888/ws");
             ws.onopen = function(evt) {
@@ -16,16 +17,16 @@
             ws.onmessage = function(evt) {
                 var coche1 = document.getElementById("coche1");
                 var coche2 = document.getElementById("coche2");
+
                 var obj = JSON.parse(evt.data);
                 var index = parseInt(obj.index);
-                var mapa = obj.map;
+                mapa = obj.map;
                 console.log(mapa[0][0]);  // todo esto es para mostrar que si reconoce
                 var message = JSON.parse(obj.msg);  // con esto consigo obtener un array en js
                 var position1 = 20*parseInt(message[0]);
                 var position2 = 400 + 20*parseInt(message[1]);
                 coche1.style.left = position1 + "px";
                 coche2.style.left = position2 + "px";
-
             };
             ws.onclose = function(evt) {
                 alert ("Connection closed");
@@ -54,20 +55,40 @@
                     ws.send(str1);
                 }
             }
-
+            function myFunction() {
+                var division = document.getElementById("prueba");
+                var matriz = [[1, 0], [1, 1]];
+                var i, j;
+                for (i = 0; i < matriz.length; i++){
+                    for (j = 0; j < matriz[0].length; j++){
+                        var x = document.createElement("IMG");
+                        if (matriz[i][j] == 1) {
+                            x.setAttribute("src", "static/bluecar.svg");
+                        }
+                        else {
+                            x.setAttribute("src", "static/yellowcar.svg");
+                        }
+                        x.setAttribute("class", "coches");
+                        x.style.top = i*20 + "px";
+                        x.style.left = j*20 + "px";
+                        division.appendChild(x);
+                    }
+                }
+             }
         });
 
     </script>
 </head>
-<body>
+<body onload="myFunction()">
     <div class="center">
         <h2>Obstacle Racing</h2>
             <label id="conn_text"></label><br />
         <h3 id="text1">Pulse espacio para empezar</h3>
     </div>
-    <div class="divcenter" style="width:600px; height: 400px;">
+    <div id="prueba" class="divcenter" style="width:600px; height: 400px;">
         <div id="coche1"><img  src="static/bluecar.svg" type="image/svg+xml"/></div>
         <div id="coche2"><img   src="static/yellowcar.svg" type="image/svg+xml"/></div>
+
         <svg style="width:600px; height: 400px; ">
             <rect x="0"  y="0" width="200" height="400" fill=#D3D3D3 />
             <rect x="400"  y="0" width="200" height="400" fill=#D3D3D3 />
