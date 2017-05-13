@@ -18,7 +18,9 @@
                 var coche2 = document.getElementById("coche2");
                 var obj = JSON.parse(evt.data);
                 var index = parseInt(obj.index);
-                message = JSON.parse(obj.msg);  // con esto consigo obtener un array en js
+                var mapa = obj.map;
+                console.log(mapa[0][0]);  // todo esto es para mostrar que si reconoce
+                var message = JSON.parse(obj.msg);  // con esto consigo obtener un array en js
                 var position1 = 20*parseInt(message[0]);
                 var position2 = 400 + 20*parseInt(message[1]);
                 coche1.style.left = position1 + "px";

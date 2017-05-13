@@ -32,7 +32,18 @@ def gameloop(data):
         for i in range(len(maps)):
             maps[i] = np.insert(maps[i], 0, line, axis=0)
             maps[i] = np.delete(maps[i], 20, axis=0)
-        print(maps[0])
+
+        connections = data['conn']
+        position = data['pos']
+        mapas = map(np.matrix.tolist, maps)  # convertimos cada matriz en una lista
+        mapalista = []
+        for elem in mapas:
+            mapalista.append(elem)  # añadimos cada lista a una general:[[mapa1], [mapa2]]
+        for elem in connections:
+            i = connections.index(elem)
+            elem.write_message({"index": str(i), "msg": str(position),
+                                "map": mapalista})
+
 
 if __name__ == "__main__":
     dict = {"start": [True, True], "map": [np.zeros((20, 10), dtype=int), np.zeros((20, 10), dtype=int)]}

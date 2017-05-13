@@ -7,7 +7,6 @@ import numpy as np
 import TypeChecker as TC
 import GameLoop as GL
 
-
 settings = {
     'debug': True,
     'static_path': 'static'}
@@ -42,10 +41,14 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         if change:  # todo cambiar a enviar data completo a los clientes en cuanto pasemos de mostrar posicion
             print(self.position)
             print('received message: %s\n' % message)
-
+            mapas = map(np.matrix.tolist, self.data["map"])  # convertimos cada matriz en una lista
+            mapalista = []
+            for elem in mapas:
+                mapalista.append(elem)  # añadimos cada lista a una general:[[mapa1], [mapa2]]
             for elem in self.connections:
                 i = self.connections.index(elem)
-                elem.write_message({"index": str(i), "msg": str(self.position)})
+                elem.write_message({"index": str(i), "msg": str(self.position),
+                                    "map": mapalista})
 
     def on_close(self):
         print('connection closed\n')
