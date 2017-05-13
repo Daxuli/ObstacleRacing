@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="static/estilos.css" rel="stylesheet">
+</head>
+<body onload="myFunction()">
+<div class="center">
+    <h2>Obstacle Racing</h2>
+    <label id="conn_text"></label><br />
+    <h3 id="text1">Pulse espacio para empezar</h3>
+</div>
+<div id="prueba" class="divcenter" style="width:600px; height: 400px;">
+    <div id="coche1"><img  src="static/bluecar.svg" type="image/svg+xml"/></div>
+    <div id="coche2"><img   src="static/yellowcar.svg" type="image/svg+xml"/></div>
+
+</div>
+
+</body>
+
+<script>
+    function myFunction() {
+        var division = document.getElementById("prueba");
+        var matriz = [Array.apply(null, Array(10)).map(Number.prototype.valueOf,0),
+            Array.apply(null, Array(10)).map(Number.prototype.valueOf,0)];
+        var i, j;
+        for (i = 0; i < matriz.length; i++){
+            for (j = 0; j < matriz[0].length; j++){
+                var x = document.createElement("IMG");
+                if (matriz[i][j] == 1) {
+                    x.setAttribute("src", "static/bluecar.svg");
+                }
+                else {
+                    x.setAttribute("src", "static/yellowcar.svg");
+                }
+                x.setAttribute("class", "coches");
+                x.style.top = 200 + i*20 + "px";
+                x.style.left = 100 + j*20 + "px";
+                division.appendChild(x);
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
