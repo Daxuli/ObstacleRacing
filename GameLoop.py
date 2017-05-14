@@ -3,7 +3,7 @@ import numpy as np
 
 
 def randomarray(maps):
-    lista = [0]*10
+    lista = np.zeros(10, dtype=int)
     if not(any(maps[0][0]) or any(maps[0][1])):
         for i in range(10):
             val = random.randint(0, 19)
@@ -19,7 +19,7 @@ def randomarray(maps):
                 lista[i] = 4
             elif val == 19:
                 lista[i] = 5
-        if not any(lista):
+        if not any(np.where(lista == 0)[0]):
             val = random.randint(0, 9)
             lista[val] = 0
     return lista
@@ -48,6 +48,6 @@ def gameloop(data):
 if __name__ == "__main__":
     dict = {"start": [True, True], "map": [np.zeros((20, 10), dtype=int), np.zeros((20, 10), dtype=int)]}
     maps = dict["map"]
-    #print(not all(maps[0][0]))
+    print(not all(maps[0][0]))
     gameloop(dict)
 

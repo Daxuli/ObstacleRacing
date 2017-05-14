@@ -10,7 +10,6 @@ def fposicion(i, mensaje, data):
     """
     position = data["pos"]
     start = data["start"]
-    print(all(start))
     if all(start) and mensaje == "L" and position[i] > 0:
         position[i] -= 1
         chng = True
@@ -34,7 +33,6 @@ def fstart(i, data):
     start = data["start"]
     start[i] = True
     chng = False
-    print(start)  # todo borrar si funciona
     return data, chng
 
 

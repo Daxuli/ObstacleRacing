@@ -38,9 +38,9 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         msg = json.loads(json_string)
         self.data, change = TC.check(i, msg, self.data)
 
-        if change:  # todo cambiar a enviar data completo a los clientes en cuanto pasemos de mostrar posicion
-            print(self.position)
-            print('received message: %s\n' % message)
+        if change:
+            #  print(self.position)
+            #  print('received message: %s\n' % message)
             mapas = map(np.matrix.tolist, self.data["map"])  # convertimos cada matriz en una lista
             mapalista = []
             for elem in mapas:
