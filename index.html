@@ -28,21 +28,53 @@
 
                 var division = document.getElementById("prueba");
                 var i, j;
-                for (i = 0; i < mapa[0].length; i++) {
-                    for (j = 0; j < mapa[0][i].length; j++) {
-                        var x = document.createElement("IMG");
-                        if (mapa[0][i][j] == 1) {
-                            x.setAttribute("src", "static/bluecar.svg");
-                        }
-                        else {
-                            x.setAttribute("src", "static/yellowcar.svg");
-                        }
-                        x.setAttribute("class", "coches");
-                        x.style.top = i * 20 + "px";
-                        x.style.left = j * 20 + "px";
-                        division.appendChild(x);
+                var x = [];
+                var y = [];
+                for (i = 0; i < 20; i++) {
+                    y[i] = [];
+                    for (j = 0; j < 10; j++) {
+                        y[i][j] = document.createElement("div");
+                        y[i][j].id = "f" + i + "c" + j;
+                        y[i][j].setAttribute("class", "coches");
+                        y[i][j].style.top = i * 20 + "px";
+                        y[i][j].style.left = j * 20 + "px";
+                        division.appendChild(y[i][j]);
+
                     }
                 }
+                for (i = 0; i < mapa[0].length; i++) {
+                    x[i] = [];
+                    for (j = 0; j < mapa[0][i].length; j++) {
+                        x[i][j] = document.createElement("img");
+                        var div = document.getElementById("f" + i + "c" + j);
+                        if (mapa[0][i][j] == 1) {
+                            div.innerHTML = "";
+                            x[i][j].setAttribute("src", "static/rock.svg");
+                        }
+                        else if (mapa[0][i][j] == 2){
+                            div.innerHTML = "";
+                            x[i][j].setAttribute("src", "static/beer.svg");
+                        }
+                        else if (mapa[0][i][j] == 3){
+                            div.innerHTML = "";
+                            x[i][j].setAttribute("src", "static/coin.svg");
+                        }
+                        else if (mapa[0][i][j] == 4){
+                            div.innerHTML = "";
+                            x[i][j].setAttribute("src", "static/octopus.svg");
+                        }
+                        else if (mapa[0][i][j] == 5){
+                            div.innerHTML = "";
+                            x[i][j].setAttribute("src", "static/tirachinas.svg");
+                        }
+                        else if (mapa[0][i][j] == 0){
+                            div.innerHTML = "";
+                        }
+                        div.appendChild(x[i][j]);
+                    }
+
+                }
+
             };
             ws.onclose = function(evt) {
                 alert ("Connection closed");
@@ -71,33 +103,8 @@
                     ws.send(str1);
                 }
             }
-
         });
-
     </script>
-    <!--script>
-        function myFunction() {
-            var division = document.getElementById("prueba");
-            var matriz = [Array.apply(null, Array(10)).map(Number.prototype.valueOf,0),
-                Array.apply(null, Array(10)).map(Number.prototype.valueOf,0)];
-            var i, j;
-            for (i = 0; i < matriz.length; i++){
-                for (j = 0; j < matriz[0].length; j++){
-                    var x = document.createElement("IMG");
-                    if (matriz[i][j] == 1) {
-                        x.setAttribute("src", "static/bluecar.svg");
-                    }
-                    else {
-                        x.setAttribute("src", "static/yellowcar.svg");
-                    }
-                    x.setAttribute("class", "coches");
-                    x.style.top = i*20 + "px";
-                    x.style.left = j*20 + "px";
-                    division.appendChild(x);
-                }
-            }
-        }
-    </script-->
 </head>
 <body>
     <div class="center">
