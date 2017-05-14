@@ -30,36 +30,38 @@
                 while (division.firstChild) {
                     division.removeChild(division.firstChild);
                 }
-                var i, j, x;
-                for (i = 0; i < 20; i++) {
-                    for (j = 0; j < 10; j++) {
-                        if (mapa[0][i][j] === 0){
-                            continue
+                var k, i, j, x;
+                for (k = 0; k<2; k++) {
+                    for (i = 0; i < 20; i++) {
+                        for (j = 0; j < 10; j++) {
+                            if (mapa[0][i][j] === 0) {
+                                continue
+                            }
+                            else if (mapa[k][i][j] === 1) {
+                                x = document.createElement("img");
+                                x.setAttribute("src", "static/rock.svg");
+                            }
+                            else if (mapa[k][i][j] === 2) {
+                                x = document.createElement("img");
+                                x.setAttribute("src", "static/beer.svg");
+                            }
+                            else if (mapa[k][i][j] === 3) {
+                                x = document.createElement("img");
+                                x.setAttribute("src", "static/coin.svg");
+                            }
+                            else if (mapa[k][i][j] === 4) {
+                                x = document.createElement("img");
+                                x.setAttribute("src", "static/octopus.svg");
+                            }
+                            else if (mapa[k][i][j] === 5) {
+                                x = document.createElement("img");
+                                x.setAttribute("src", "static/tirachinas.svg");
+                            }
+                            x.setAttribute("class", "coches");
+                            x.style.top = i * 20 + "px";
+                            x.style.left = k * 400 + j * 20 + "px";
+                            division.appendChild(x);
                         }
-                        else if (mapa[0][i][j] === 1) {
-                            x = document.createElement("img");
-                            x.setAttribute("src", "static/rock.svg");
-                        }
-                        else if (mapa[0][i][j] === 2) {
-                            x = document.createElement("img");
-                            x.setAttribute("src", "static/beer.svg");
-                        }
-                        else if (mapa[0][i][j] === 3) {
-                            x = document.createElement("img");
-                            x.setAttribute("src", "static/coin.svg");
-                        }
-                        else if (mapa[0][i][j] === 4) {
-                            x = document.createElement("img");
-                            x.setAttribute("src", "static/octopus.svg");
-                        }
-                        else if (mapa[0][i][j] === 5) {
-                            x = document.createElement("img");
-                            x.setAttribute("src", "static/tirachinas.svg");
-                        }
-                        x.setAttribute("class", "coches");
-                        x.style.top = i * 20 + "px";
-                        x.style.left = j * 20 + "px";
-                        division.appendChild(x);
                     }
                 }
 
