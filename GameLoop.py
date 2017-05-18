@@ -1,5 +1,6 @@
 import random
 import numpy as np
+import TypeChecker as TC
 
 
 def randomarray(maps):
@@ -10,31 +11,39 @@ def randomarray(maps):
             if val < 4:
                 lista[i] = 0
             elif val < 16:
-                lista[i] = 1
+                lista[i] = 1  # rock
             elif val == 16:
-                lista[i] = 2
+                lista[i] = 2  # beer
             elif val == 17:
-                lista[i] = 3
+                lista[i] = 3  # coin
             elif val == 18:
-                lista[i] = 4
+                lista[i] = 4  # octopus
             elif val == 19:
-                lista[i] = 5
+                lista[i] = 5  # tirachinas
         if not any(np.where(lista == 0)[0]):
             val = random.randint(0, 9)
             lista[val] = 0
     return lista
 
+
 def gameloop(data):
     start = data['start']
     if all(start) and start:  # all de un array vacio va a dar True porque no hay ningun False
         maps = data["map"]
+        jugadores = len(maps)
         line = np.array(randomarray(maps))
-        for i in range(len(maps)):
+        for i in range(jugadores):
             maps[i] = np.insert(maps[i], 0, line, axis=0)
             maps[i] = np.delete(maps[i], 20, axis=0)
 
         connections = data['conn']
         position = data['pos']
+        status = data['stat']
+
+        for i in range(jugadores):
+            maps, position, status = TC.interaccion(i, maps, position, status, True)
+        print(status[0])  # todo borrar
+
         mapas = map(np.matrix.tolist, maps)  # convertimos cada matriz en una lista
         mapalista = []
         for elem in mapas:
@@ -42,7 +51,7 @@ def gameloop(data):
         for elem in connections:
             i = connections.index(elem)
             elem.write_message({"index": str(i), "msg": position,
-                                "map": mapalista})
+                                "map": mapalista, "stat": status})
 
 
 if __name__ == "__main__":
@@ -50,4 +59,3 @@ if __name__ == "__main__":
     maps = dict["map"]
     print(not all(maps[0][0]))
     gameloop(dict)
-

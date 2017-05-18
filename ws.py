@@ -19,15 +19,17 @@ class IndexHandler(tornado.web.RequestHandler):
 
 
 class WSHandler(tornado.websocket.WebSocketHandler):
-    data = {"conn": [], "pos": [], "start": [], "map": []}
+    data = {"conn": [], "pos": [], "start": [], "map": [], "stat": []}
     connections = data["conn"]
     position = data["pos"]
+    status = data["stat"]
 
     def open(self):
         self.connections.append(self)
         self.position.append([14, 5])
         self.data["start"].append(False)
         self.data["map"].append(np.zeros((20, 10), dtype=int))
+        self.status.append([0, 0, 0, 0, 0])
 
         print('New connection was opened')
         self.write_message("Conn!")
@@ -39,8 +41,8 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         self.data, change = TC.check(i, msg, self.data)
 
         if change:
-            #  print(self.position)
-            #  print('received message: %s\n' % message)
+            self.data["map"], self.position, self.status = TC.interaccion(i, self.data["map"], self.position,
+                                                                          self.status, False)
             mapas = map(np.matrix.tolist, self.data["map"])  # convertimos cada matriz en una lista
             mapalista = []
             for elem in mapas:
@@ -48,7 +50,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
             for elem in self.connections:
                 i = self.connections.index(elem)
                 elem.write_message({"index": str(i), "msg": self.position,
-                                    "map": mapalista})
+                                    "map": mapalista, "stat": self.status})
 
     def on_close(self):
         print('connection closed\n')
