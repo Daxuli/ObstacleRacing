@@ -10,11 +10,11 @@ def fposicion(i, mensaje, data):
     """
     position = data["pos"]
     start = data["start"]
-    if all(start) and mensaje == "L" and position[i] > 0:
-        position[i] -= 1
+    if all(start) and mensaje == "L" and position[i][1] > 0:
+        position[i][1] -= 1
         chng = True
-    elif all(start) and mensaje == "R" and position[i] < 9:
-        position[i] += 1
+    elif all(start) and mensaje == "R" and position[i][1] < 9:
+        position[i][1] += 1
         chng = True
     else:
         chng = False
@@ -37,7 +37,7 @@ def fstart(i, data):
 
 
 if __name__ == "__main__":
-    midict = {"conn": [], "pos": [5, 5], "start": [False, False]}
+    midict = {"conn": [], "pos": [[14, 5], [14, 5]], "start": [False, False]}
     salidaP, cambio = fposicion(0, "L", midict)
     print(salidaP)
     print("---------------------------")

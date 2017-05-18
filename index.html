@@ -19,19 +19,25 @@
                 var obj = JSON.parse(evt.data);
                 var index = parseInt(obj.index);
                 var mapa = obj.map;
-                // console.log(mapa[0][0]);
-                var message = JSON.parse(obj.msg);  // con esto consigo obtener un array en js
-                var position1 = 20*parseInt(message[0]);
-                var position2 = 400 + 20*parseInt(message[1]);
-                coche1.style.left = position1 + "px";
-                coche2.style.left = position2 + "px";
+                //console.log(mapa[0][0]);
+                var message = obj.msg;
+                var posfil1 = 20*parseInt(message[0][0]);
+                var poscol1 = 20*parseInt(message[0][1]);
+                coche1.style.left = poscol1 + "px";
+                coche1.style.top = posfil1 + "px";
+                if (message.length === 2) {
+                    var posfil2 = 20 * parseInt(message[1][0]);
+                    var poscol2 = 20 * parseInt(message[1][1]);
+                    coche2.style.left = poscol2 + "px";
+                    coche2.style.top = posfil2 + "px";
+                }
 
                 var division = document.getElementById("prueba");
                 while (division.firstChild) {
                     division.removeChild(division.firstChild);
                 }
                 var k, i, j, x;
-                for (k = 0; k<2; k++) {
+                for (k = 0; k<mapa.length; k++) {
                     for (i = 0; i < 20; i++) {
                         for (j = 0; j < 10; j++) {
                             if (mapa[0][i][j] === 0) {

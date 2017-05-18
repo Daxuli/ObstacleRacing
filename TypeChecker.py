@@ -15,7 +15,7 @@ def check(i, mensaje, data):
     return respuesta, change
 
 if __name__ == "__main__":
-    midict = {"conn": [], "pos": [5, 5], "start": [False, False]}
+    midict = {"conn": [], "pos": [[14, 5], [14, 5]], "start": [True, False]}
     salidaP, cambio = check(0, {"msg": "L"}, midict)
     print(salidaP)
     print("---------------------------")

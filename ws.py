@@ -25,7 +25,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
     def open(self):
         self.connections.append(self)
-        self.position.append(5)
+        self.position.append([14, 5])
         self.data["start"].append(False)
         self.data["map"].append(np.zeros((20, 10), dtype=int))
 
@@ -47,7 +47,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
                 mapalista.append(elem)  # añadimos cada lista a una general:[[mapa1], [mapa2]]
             for elem in self.connections:
                 i = self.connections.index(elem)
-                elem.write_message({"index": str(i), "msg": str(self.position),
+                elem.write_message({"index": str(i), "msg": self.position,
                                     "map": mapalista})
 
     def on_close(self):

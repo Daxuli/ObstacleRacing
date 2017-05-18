@@ -41,7 +41,7 @@ def gameloop(data):
             mapalista.append(elem)  # añadimos cada lista a una general:[[mapa1], [mapa2]]
         for elem in connections:
             i = connections.index(elem)
-            elem.write_message({"index": str(i), "msg": str(position),
+            elem.write_message({"index": str(i), "msg": position,
                                 "map": mapalista})
 
 
