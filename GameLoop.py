@@ -25,6 +25,10 @@ def randomarray(maps):
             lista[val] = 0
     return lista
 
+def tirachinasarray(lineas, estados):
+    for i in range(li)
+    return lineas
+
 
 def gameloop(data):
     start = data['start']
@@ -32,8 +36,11 @@ def gameloop(data):
         maps = data["map"]
         jugadores = len(maps)
         line = np.array(randomarray(maps))
+        lineas = []
         for i in range(jugadores):
-            maps[i] = np.insert(maps[i], 0, line, axis=0)
+            lineas.append(line)
+            # todo
+            maps[i] = np.insert(maps[i], 0, lineas[i], axis=0)
             maps[i] = np.delete(maps[i], 20, axis=0)
 
         connections = data['conn']
