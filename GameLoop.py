@@ -42,12 +42,13 @@ def gameloop(data):
 
         for i in range(jugadores):
             maps, position, status = TC.interaccion(i, maps, position, status, True)
-        print(status[0])  # todo borrar
 
         mapas = map(np.matrix.tolist, maps)  # convertimos cada matriz en una lista
         mapalista = []
         for elem in mapas:
             mapalista.append(elem)  # añadimos cada lista a una general:[[mapa1], [mapa2]]
+        print(mapalista[0][17])
+        print(mapalista[1][17])
         for elem in connections:
             i = connections.index(elem)
             elem.write_message({"index": str(i), "msg": position,
