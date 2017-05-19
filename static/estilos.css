@@ -37,8 +37,15 @@
     left:265px;
     top:50px;
     vertical-align: middle;
+}
 
-
+#win{
+    position: absolute;
+    left:240px;
+    top:100px;
+    vertical-align: middle;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 #puntuacion{
