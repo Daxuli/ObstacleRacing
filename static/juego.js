@@ -161,7 +161,7 @@
                 if (evt.keyCode == 32) {
                     var text1 = document.getElementById("text1");
 
-                    text1.style.color = "white";
+                    text1.style.opacity = 0;
                     var message = 'play';
                     var str1 = `{"go": "${message || 'default'}" }`;
                     ws.send(str1);
