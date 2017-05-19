@@ -21,7 +21,7 @@
                 var obj = JSON.parse(evt.data);
                 var index = parseInt(obj.index);
                 var mapa = obj.map;
-                //console.log(mapa[0][0]);
+                console.log(obj.stat[0]);
                 var message = obj.msg;
                 var status = obj.stat;
                 var posfil1 = 20 * parseInt(message[0][0]);
@@ -43,7 +43,7 @@
                 for (k = 0; k < mapa.length; k++) {
                     for (i = 0; i < 20; i++) {
                         for (j = 0; j < 10; j++) {
-                            if (mapa[0][i][j] === 0) {
+                            if (mapa[k][i][j] === 0) {
                                 continue
                             }
                             else if (mapa[k][i][j] === 1) {

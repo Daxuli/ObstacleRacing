@@ -37,7 +37,7 @@ def interaccion(i, mapas, posiciones, estados, tiempo):
         mapas[i][fila], estados[i] = FI.octopus(columna, mapa[fila], estado, tiempo)
     if len(estados) == 2:
         if objeto == 5 or estados[j][4] != 0:
-            mapas[i][fila], estados[j] = FI.tirachinas(columna, mapa[fila], estado, tiempo)
+            mapas[i][fila], estados[j] = FI.tirachinas(columna, mapa[fila], estados[j], tiempo)
     return mapas, posiciones, estados
 
 
