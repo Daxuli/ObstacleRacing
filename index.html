@@ -5,173 +5,21 @@
     <link href="static/estilos.css" rel="stylesheet">
     <title>Obstacle Racing</title>
     <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
-    <script>
+    <script src="static/juego.js"></script>
 
-        $(document).ready(function () {
-            var cerveza;
-            //change example.com with your IP or your host
-            var ws = new WebSocket("ws://Localhost:8888/ws");
-            ws.onopen = function (evt) {
-                var conn_status = document.getElementById('conn_text');
-                conn_status.innerHTML = "Connection status: Connected!"
-            };
-            ws.onmessage = function (evt) {
-                var coche1 = document.getElementById("coche1");
-                var coche2 = document.getElementById("coche2");
-                var obj = JSON.parse(evt.data);
-                var index = parseInt(obj.index);
-                var mapa = obj.map;
-                console.log(obj.stat[0]);
-                var message = obj.msg;
-                var status = obj.stat;
-                var posfil1 = 20 * parseInt(message[0][0]);
-                var poscol1 = 20 * parseInt(message[0][1]);
-                coche1.style.left = poscol1 + "px";
-                coche1.style.top = posfil1 + "px";
-                if (message.length === 2) {
-                    var posfil2 = 20 * parseInt(message[1][0]);
-                    var poscol2 = 400 + 20 * parseInt(message[1][1]);
-                    coche2.style.left = poscol2 + "px";
-                    coche2.style.top = posfil2 + "px";
-                }
-                //DibujarDibujarDibujarDibujarDibujarDibujarDibujarDibujarDibujarDibujarDibujarDibujar
-                var division = document.getElementById("prueba");
-                while (division.firstChild) {
-                    division.removeChild(division.firstChild);
-                }
-                var k, i, j, x;
-                for (k = 0; k < mapa.length; k++) {
-                    for (i = 0; i < 20; i++) {
-                        for (j = 0; j < 10; j++) {
-                            if (mapa[k][i][j] === 0) {
-                                continue
-                            }
-                            else if (mapa[k][i][j] === 1) {
-                                x = document.createElement("img");
-                                x.setAttribute("src", "static/rock.svg");
-                            }
-                            else if (mapa[k][i][j] === 2) {
-                                x = document.createElement("img");
-                                x.setAttribute("src", "static/beer.svg");
-                            }
-                            else if (mapa[k][i][j] === 3) {
-                                x = document.createElement("img");
-                                x.setAttribute("src", "static/coin.svg");
-                            }
-                            else if (mapa[k][i][j] === 4) {
-                                x = document.createElement("img");
-                                x.setAttribute("src", "static/octopus.svg");
-                            }
-                            else if (mapa[k][i][j] === 5) {
-                                x = document.createElement("img");
-                                x.setAttribute("src", "static/tirachinas.svg");
-                            }
-                            x.setAttribute("class", "coches");
-                            x.style.top = i * 20 + "px";
-                            x.style.left = k * 400 + j * 20 + "px";
-                            division.appendChild(x);
-                        }
-                    }
-                }
-
-                //OroOroOroOroOroOroOroOroOroOroOroOroOroOroOroOroOro
-                var puntos = [];
-                puntos[0] = status[0][2];
-                puntos[1] = status[1][2];
-                document.getElementById("puntuacion").innerHTML = puntos[0] + ":" + puntos[1];
-                if (puntos[0] == 20) {
-                    alert("Player 1 Wins");
-                }
-                if (puntos[1] == 20) {
-                    alert("Player 2 Wins");
-                }
-                //rocarocarocarocarocarocarocarocarocarocarocaroca
-                if(status[0][0] != 0) {
-                    document.getElementById("coche1").classList.add('blink');
-                }
-                if(status[0][0] == 0) {
-                    document.getElementById("coche1").classList.remove('blink');
-                }
-                if(status[1][0] != 0) {
-                    document.getElementById("coche2").classList.add('blink');
-                }
-                if(status[1][0] == 0) {
-                    document.getElementById("coche2").classList.remove('blink');
-                }
-                //cervezacervezacervezacervezacervezacervezacervezacerveza
-                if (status[0][1]==0 && index == 0){
-                    cerveza = false
-                }
-                if (status[0][1]!=0 && index == 0){
-                    cerveza = true
-                }
-                if (status[1][1]==0 && index == 1){
-                    cerveza = false
-                }
-                if (status[1][1]!=0 && index == 1){
-                    cerveza = true
-                }
-                //pulpopulpopulpopulpopulpopulpopulpopulpopulpopulpo
-
-                if (status[0][3]==0){
-                    document.getElementById("pulpo1").style.opacity = 0;
-                }
-                if (status[0][3]!=0){
-                    document.getElementById("pulpo1").style.opacity = 1;
-                }
-                if (status[1][3]==0){
-                    document.getElementById("pulpo2").style.opacity = 0;
-                }
-                if (status[1][3]!=0){
-                    document.getElementById("pulpo2").style.opacity = 1;
-                }
-
-            };
-
-            ws.onclose = function (evt) {
-                alert("Connection closed");
-            };
-
-
-            document.onkeydown = checkPress;
-            function checkPress(evt) {
-                evt = evt || event;
-                if ((evt.keyCode == 37 && cerveza==false) ||  (evt.keyCode == 39 && cerveza==true)) {
-                    evt.preventDefault();
-                    var message = 'L';
-                    var str1 = `{"msg": "${message || 'default'}" }`;
-                    ws.send(str1);
-                }
-                if ((evt.keyCode == 39 && cerveza==false) || (evt.keyCode == 37 && cerveza==true)) {
-                    var message = 'R';
-                    evt.preventDefault();
-                    var str1 = `{"msg": "${message || 'default'}" }`;
-                    ws.send(str1);
-                }
-                if (evt.keyCode == 32) {
-                    var text1 = document.getElementById("text1");
-                    text1.style.color = "white";
-                    var message = 'play';
-                    var str1 = `{"go": "${message || 'default'}" }`;
-                    ws.send(str1);
-                }
-            }
-        });
-
-
-    </script>
 </head>
-<body>
+<body style="background: url(static/city.png) no-repeat center center;">
     <div class="center">
-        <h2>Obstacle Racing</h2>
-            <label id="conn_text"></label><br />
-        <h3 id="text1">Pulse espacio para empezar</h3>
+        <h2 style="color:white">Obstacle Racing</h2>
+            <label id="conn_text" style="color:white"></label><br />
+        <h3 id="text1" style="color:white">Pulse espacio para empezar</h3>
     </div>
     <div class="divcenter" style="width:600px; height: 400px;">
         <div id="prueba"></div>
         <div id="coche1"><img  src="static/bluecar.svg" type="image/svg+xml"/></div>
         <div id="coche2"><img   src="static/yellowcar.svg" type="image/svg+xml"/></div>
-        <div id="oro"> <img   src="static/coin.svg" type="image/svg+xml"/> <span id="puntuacion">0:0</span> </div>
+        <div id="oro"> <img   src="static/coin.svg" type="image/svg+xml"/> <span id="puntuacion" style="color:white">0:0</span> </div>
+        <div id="win" style="color:white"></div>
         <div id="pulpo1"></div>
         <div id="pulpo2"></div>
         <svg style="width:600px; height: 400px; ">
@@ -184,6 +32,11 @@
             <circle cx="110" cy="290" r="10" fill="red" />
             <circle cx="510" cy="290" r="10" fill="yellow" />
         </svg>
+    </div>
+    <div class="center">
+        <audio autoplay loop>
+            <source src="static/tetris.mp3" type="audio/ogg">
+        </audio>
     </div>
 
 </body>
