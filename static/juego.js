@@ -73,15 +73,15 @@
                 puntos[0] = status[0][2];
                 puntos[1] = status[1][2];
                 document.getElementById("puntuacion").innerHTML = puntos[0] + ":" + puntos[1];
-                if (puntos[0] == 2 && puntos[1] < 2) {
+                if (puntos[0] == 10 && puntos[1] < 2) {
                     document.getElementById("win").textContent = "Player 1 Wins";
                     game = false;
                 }
-                else if (puntos[1] == 2 && puntos[0] < 2) {
+                else if (puntos[1] == 10 && puntos[0] < 2) {
                     document.getElementById("win").textContent = "Player 2 Wins";
                     game = false;
                 }
-                else if (puntos[1] == 2 && puntos[0] == 2) {
+                else if (puntos[1] == 10 && puntos[0] == 10) {
                     document.getElementById("win").textContent = "Tie, Game Over";
                     game = false;
                 }

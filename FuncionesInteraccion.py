@@ -1,14 +1,17 @@
-def rock(fila, estado, tiempo):
+def rock(fila, estado, start, tiempo):
     parpadea = estado[0]
     if parpadea != 0 and tiempo:
         estado[0] += 1
         if parpadea == 3:
             estado[0] = 0
-    elif parpadea == 0:
+    elif parpadea == 0 and fila < 19:
         fila += 1
         estado[0] += 1
+    elif parpadea == 0:
+        fila += 1
+        start = False
 
-    return fila, estado
+    return fila, estado, start
 
 
 def beer(columna, filamapa, estado, tiempo):

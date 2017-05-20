@@ -17,7 +17,7 @@ def check(i, mensaje, data):
     return respuesta, change
 
 
-def interaccion(i, mapas, posiciones, estados, tiempo):
+def interaccion(i, mapas, posiciones, estados, start, tiempo):
     mapa = mapas[i]
     estado = estados[i]
     fila = posiciones[i][0]
@@ -28,7 +28,7 @@ def interaccion(i, mapas, posiciones, estados, tiempo):
         j = 0
 
     if objeto == 1 or estado[0] != 0:
-        posiciones[i][0], estados[i] = FI.rock(fila, estado, tiempo)
+        posiciones[i][0], estados[i], start[i] = FI.rock(fila, estado, start[i], tiempo)
     if objeto == 2 or estado[1] != 0:
         mapas[i][fila], estados[i] = FI.beer(columna, mapa[fila], estado, tiempo)
     if objeto == 3:
@@ -38,7 +38,7 @@ def interaccion(i, mapas, posiciones, estados, tiempo):
     if len(estados) == 2:
         if objeto == 5 or estados[j][4] != 0:
             mapas[i][fila], estados[j] = FI.tirachinas(columna, mapa[fila], estados[j], tiempo)
-    return mapas, posiciones, estados
+    return mapas, posiciones, estados, start
 
 
 if __name__ == "__main__":

@@ -23,11 +23,12 @@ class WSHandler(tornado.websocket.WebSocketHandler):
     connections = data["conn"]
     position = data["pos"]
     status = data["stat"]
+    start = data["start"]
 
     def open(self):
         self.connections.append(self)
         self.position.append([14, 5])
-        self.data["start"].append(False)
+        self.start.append(False)
         self.data["map"].append(np.zeros((20, 10), dtype=int))
         self.status.append([0, 0, 0, 0, 0])
 
@@ -41,8 +42,8 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         self.data, change = TC.check(i, msg, self.data)
 
         if change:
-            self.data["map"], self.position, self.status = TC.interaccion(i, self.data["map"], self.position,
-                                                                          self.status, False)
+            self.data["map"], self.position, self.status, self. start= TC.interaccion(i, self.data["map"], self.position,
+                                                                                      self.status, self.start, False)
             mapas = map(np.matrix.tolist, self.data["map"])  # convertimos cada matriz en una lista
             mapalista = []
             for elem in mapas:

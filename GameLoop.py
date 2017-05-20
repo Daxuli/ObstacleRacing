@@ -1,4 +1,5 @@
 import random
+import tornado.ioloop
 import numpy as np
 import TypeChecker as TC
 
@@ -25,37 +26,47 @@ def randomarray(maps):
             lista[val] = 0
     return lista
 
-def tirachinasarray(lineas, estados):
-    for i in range(li)
-    return lineas
+
+def tirachinasarray(linea, estado):
+    if estado[4] != 0 and any(linea):
+        indices = np.where(linea == 0)[0]
+        linea[random.choice(indices)] = 1
+    return linea
+
+def gamechecker(posiciones, estados, start):
+    for i in range(len(posiciones)):
+        j = 0
+        if i == 0:
+            j = 1
+        if estados[j][2] == 10:
+            start[i] = False
+    return start
 
 
 def gameloop(data):
     start = data['start']
+    maps = data["map"]
+    connections = data['conn']
+    position = data['pos']
+    status = data['stat']
     if all(start) and start:  # all de un array vacio va a dar True porque no hay ningun False
-        maps = data["map"]
+        start = gamechecker(position, status, start)
         jugadores = len(maps)
         line = np.array(randomarray(maps))
         lineas = []
         for i in range(jugadores):
             lineas.append(line)
-            # todo
+            lineas[i] = tirachinasarray(line, status[i])
             maps[i] = np.insert(maps[i], 0, lineas[i], axis=0)
             maps[i] = np.delete(maps[i], 20, axis=0)
 
-        connections = data['conn']
-        position = data['pos']
-        status = data['stat']
-
         for i in range(jugadores):
-            maps, position, status = TC.interaccion(i, maps, position, status, True)
+            maps, position, status, start = TC.interaccion(i, maps, position, status, start, True)
 
         mapas = map(np.matrix.tolist, maps)  # convertimos cada matriz en una lista
         mapalista = []
         for elem in mapas:
             mapalista.append(elem)  # añadimos cada lista a una general:[[mapa1], [mapa2]]
-        print(mapalista[0][17])
-        print(mapalista[1][17])
         for elem in connections:
             i = connections.index(elem)
             elem.write_message({"index": str(i), "msg": position,
@@ -63,7 +74,9 @@ def gameloop(data):
 
 
 if __name__ == "__main__":
-    dict = {"start": [True, True], "map": [np.zeros((20, 10), dtype=int), np.zeros((20, 10), dtype=int)]}
+    dict = {"start": [True, True], "map": [np.zeros((20, 10), dtype=int), np.zeros((20, 10), dtype=int)],
+            "stat":[[0, 0, 0, 0, 2], [0, 0, 0, 0, 2]]}
     maps = dict["map"]
     print(not all(maps[0][0]))
-    gameloop(dict)
+
+
