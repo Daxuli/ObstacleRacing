@@ -50,7 +50,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
                 mapalista.append(elem)  # añadimos cada lista a una general:[[mapa1], [mapa2]]
             for elem in self.connections:
                 i = self.connections.index(elem)
-                elem.write_message({"index": str(i), "msg": self.position,
+                elem.write_message({"index": i, "msg": self.position,
                                     "map": mapalista, "stat": self.status})
 
     def on_close(self):
