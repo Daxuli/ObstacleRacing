@@ -1,6 +1,5 @@
 # ObstacleRacing
 Obstacle racing game using Python and Javascript
 Cosas por hacer:
-  enviar datos a cliente
-  condicion de end game
-  tirachinas genera rocas
+  -documentar los archivos
+  -informe del orden de 5 caras. No hace falta meter ni explicar el codigo

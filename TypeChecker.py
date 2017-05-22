@@ -1,23 +1,49 @@
+"""
+TypeChecker.py
+
+Código que contiene 2 funciones: @check, @interaccion
+y que relaciona a los siguientes módulos: @FuncionesMensaje, @FuncionesInteraccion
+"""
 import FuncionesMensaje as FM
 import FuncionesInteraccion as FI
-import numpy as np
 
 
 def check(i, mensaje, data):
+    """
+    Clasifica el mensaje recibido por el cliente, y realiza las modificaciones oportunas
+    :param i: identificador del cliente que ha enviado el mensaje
+    :param mensaje: mensaje recibido
+    :type mensaje: dict
+    :param data: datos de todos los clientes
+    :type data: dict
+
+    :return data: devuelve los nuevos datos a @ws o @GameLoop
+    :return cambio: devuelve si se han producido cambios a @ws o @GameLoop
+    """
     llave = []
     respuesta = data
-    change = False
-    for key in mensaje:
+    change = False  # valor por defecto y definitivo si no se cumplen los siguientes condicionales
+    for key in mensaje:  # convertimos la llave de @mensaje en un string que se guarda en la lista @llave
         llave.append(key)
-    if llave[0] == "msg":
+    if llave[0] == "msg":  # input de L o R
         respuesta, change = FM.fposicion(i, mensaje["msg"], data)
 
-    if llave[0] == "go":
+    if llave[0] == "go":  # input de espacio
         respuesta, change = FM.fstart(i, data)
     return respuesta, change
 
 
 def interaccion(i, mapas, posiciones, estados, start, tiempo):
+    """
+
+    :param i:
+    :param mapas:
+    :param posiciones:
+    :param estados:
+    :param start:
+    :param tiempo:
+    :return:
+    """
     mapa = mapas[i]
     estado = estados[i]
     fila = posiciones[i][0]

@@ -49,7 +49,8 @@ def gameloop(data):
     connections = data['conn']
     position = data['pos']
     status = data['stat']
-    if all(start) and start:  # all de un array vacio va a dar True porque no hay ningun False
+    # if all(start) and start:  # all de un array vacio va a dar True porque no hay ningun False
+    if start == [True, True]:  # condición orientada al caso de 2 jugadores
         start = gamechecker(position, status, start)
         jugadores = len(maps)
         line = np.array(randomarray(maps))
