@@ -2,7 +2,7 @@
             var game = true;
             var cerveza;
             //change example.com with your IP or your host
-            var ws = new WebSocket("ws://Localhost:8888/ws");
+            var ws = new WebSocket("ws://138.4.94.1:8888/ws");
             ws.onopen = function (evt) {
                 var conn_status = document.getElementById('conn_text');
                 conn_status.innerHTML = "Connection status: Connected!"
@@ -13,7 +13,7 @@
                     var mapa = obj.map;
                     var message = obj.msg;
                     var status = obj.stat;
-                    var index = parseInt(obj.index);
+                    var index = obj.index;
                     console.log(obj.stat[0]);
                 }
                 var coche1 = document.getElementById("coche1");
