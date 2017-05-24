@@ -2,7 +2,7 @@
             var game = true;
             var cerveza;
             //change example.com with your IP or your host
-            var ws = new WebSocket("ws://138.4.94.1:8888/ws");
+            var ws = new WebSocket("ws://localhost:8888/ws");
             ws.onopen = function (evt) {
                 var conn_status = document.getElementById('conn_text');
                 conn_status.innerHTML = "Connection status: Connected!"

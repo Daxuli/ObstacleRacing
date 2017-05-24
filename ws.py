@@ -42,7 +42,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         self.position.append([14, 5])
         self.start.append(False)
         self.data["map"].append(np.zeros((20, 10), dtype=int))
-        self.status.append([0, 0, 0, 0, 0])
+        self.status.append([0, 0, 8, 0, 0])
 
         print('New connection was opened')
 
