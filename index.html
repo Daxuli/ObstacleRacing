@@ -6,9 +6,18 @@
     <title>Obstacle Racing</title>
     <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
     <script src="static/juego.js"></script>
+    <style>
+        body{
+            height:100%;
+            width:100%;
+            background-image:url(static/city.png);/*your background image*/
+            background-repeat:no-repeat;/*we want to have one single image not a repeated one*/
+            background-size:cover;/*this sets the image to fullscreen covering the whole screen*/
+        }
+    </style>
 
 </head>
-<body style="background: url(static/city.png) no-repeat center center;">
+<body>
     <div class="center">
         <h2 style="color:white">Obstacle Racing</h2>
             <label id="conn_text" style="color:white"></label><br />
