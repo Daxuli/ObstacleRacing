@@ -85,10 +85,10 @@ if __name__ == "__main__":
     http_server = tornado.httpserver.HTTPServer(application)
     http_server.listen(8888)
     main_loop = tornado.ioloop.IOLoop.instance()
-    """listener"""
+    # listener
     data = WSHandler.data
     sched = tornado.ioloop.PeriodicCallback(lambda: GL.gameloop(data), 1000, io_loop=main_loop)
-    """ bucle del juego principal"""
+    # bucle del juego principal
     sched.start()
     main_loop.start()
 
