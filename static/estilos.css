@@ -1,3 +1,11 @@
+        body{
+            height:100%;
+            width:100%;
+            background-image:url(../static/city.png);/*your background image*/
+            background-repeat:no-repeat;/*we want to have one single image not a repeated one*/
+            background-size:cover;/*this sets the image to fullscreen covering the whole screen*/
+        }
+
 .center {
     text-align: center;
     margin: auto;
@@ -38,8 +46,7 @@
     top:50px;
     vertical-align: middle;
 }
-
-#win{
+#win{ /* Esto es para cometar quien gana */
     position: absolute;
     left:240px;
     top:100px;
@@ -52,7 +59,7 @@
     font-size: 25px;
     font-weight: bold;
 }
-.blink{
+.blink{ /* Esto sirve para parpadear */
     -webkit-animation: blink 0.5s;
     -webkit-animation-iteration-count: 3;
     -moz-animation: blink 0.5s;
@@ -95,6 +102,7 @@
     }
 }
 
+/* Estos son los divs que se activan cuando coge el pulpo */
 #pulpo1{
     position: absolute;
     height: 260px;

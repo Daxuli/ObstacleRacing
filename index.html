@@ -6,15 +6,6 @@
     <title>Obstacle Racing</title>
     <script src="http://code.jquery.com/jquery-2.0.0.js"></script>
     <script src="static/juego.js"></script>
-    <style>
-        body{
-            height:100%;
-            width:100%;
-            background-image:url(static/city.png);/*your background image*/
-            background-repeat:no-repeat;/*we want to have one single image not a repeated one*/
-            background-size:cover;/*this sets the image to fullscreen covering the whole screen*/
-        }
-    </style>
 
 </head>
 <body>
@@ -24,6 +15,7 @@
         <h3 id="text1" style="color:white">Pulse espacio para empezar</h3>
     </div>
     <div class="divcenter" style="width:600px; height: 400px;">
+        <!--Definimos el espacio necesario para el juego con los objetos-->
         <div id="prueba"></div>
         <div id="coche1"><img  src="static/bluecar.svg" type="image/svg+xml"/></div>
         <div id="coche2"><img   src="static/yellowcar.svg" type="image/svg+xml"/></div>
@@ -32,17 +24,18 @@
         <div id="pulpo1"></div>
         <div id="pulpo2"></div>
         <svg style="width:600px; height: 400px; ">
+            <!--Definimos los bordes-->
             <rect x="0"  y="0" width="200" height="400" fill=#D3D3D3 />
             <rect x="400"  y="0" width="200" height="400" fill=#D3D3D3 />
             <rect x="0"  y="0" width="20" height="400" fill=#66ff66 />
             <rect x="180"  y="0" width="20" height="400" fill=#66ff66 />
             <rect x="400"  y="0" width="20" height="400" fill=#66ff66 />
             <rect x="580"  y="0" width="20" height="400" fill=#66ff66 />
-            <!--circle cx="110" cy="290" r="10" fill="red" />
-            <circle cx="510" cy="290" r="10" fill="yellow" /-->
+
         </svg>
     </div>
     <div class="center">
+        <!--Esto es la musica de fondo-->
         <audio autoplay loop>
             <source src="static/tetris.mp3" type="audio/ogg">
         </audio>

@@ -1,23 +1,25 @@
         $(document).ready(function () {
-            var game = true;
+            var game = true; //Esta variable nos servira para parar el juego una vez terminado
             var cerveza;
-            //change example.com with your IP or your host
-            var ws = new WebSocket("ws://localhost:8888/ws");
+            var ws = new WebSocket("ws://localhost:8888/ws"); //cambiar aqui localhost por tu ip
             ws.onopen = function (evt) {
                 var conn_status = document.getElementById('conn_text');
                 conn_status.innerHTML = "Connection status: Connected!"
             };
             ws.onmessage = function (evt) {
                 if (game == true){
+                    //aqui recibimos las variables que nos envia el servidor(python tornado)
                     var obj = JSON.parse(evt.data);
-                    var mapa = obj.map;
-                    var message = obj.msg;
-                    var status = obj.stat;
-                    var index = obj.index;
-                    console.log(obj.stat[0]);
+                    var mapa = obj.map; //esto es para situar cada objeto en la mapa
+                    var message = obj.msg; //aqui esta las posiciones de los coches
+                    var status = obj.stat; //esto es el estado de cada jugador, por ejemplo: borracho, pulpo, roca
+                    var index = obj.index; //esto nos servira para distinguir un jugador del otro
+                    console.log(obj.stat[0]); //no sirve para nada, solo para comprabar que funciona el status
                 }
                 var coche1 = document.getElementById("coche1");
                 var coche2 = document.getElementById("coche2");
+
+                //las posiciones de los coches
                 var posfil1 = 20 * parseInt(message[0][0]);
                 var poscol1 = 20 * parseInt(message[0][1]);
                 coche1.style.left = poscol1 + "px";
@@ -28,10 +30,11 @@
                     coche2.style.left = poscol2 + "px";
                     coche2.style.top = posfil2 + "px";
                 }
-                //DibujarDibujarDibujarDibujarDibujarDibujarDibujarDibujarDibujarDibujarDibujarDibujar
+
+                //el mapa, situa cada objeto en su lugar correspondiente
                 var division = document.getElementById("prueba");
                 while (division.firstChild) {
-                    division.removeChild(division.firstChild);
+                    division.removeChild(division.firstChild); //se va eliminando el mapa anterir y sustituyendo por el nuevo.
                 }
                 var k, i, j, x;
                 for (k = 0; k < mapa.length; k++) {
@@ -68,7 +71,8 @@
                     }
                 }
 
-                //OroOroOroOroOroOroOroOroOroOroOroOroOroOroOroOroOro
+                //Status oro, aniade un punto si coge un oro, y gana el primero que llege al 10, si los dos llegan la mismo
+                //tiempo al 10, es un empate.
                 var puntos = [];
                 puntos[0] = status[0][2];
                 puntos[1] = status[1][2];
@@ -85,6 +89,7 @@
                     document.getElementById("win").textContent = "Tie, Game Over";
                     game = false;
                 }
+                //tambien gamas si el otro sale del mapa,
                 else if (message[0][0] == 20) {
                     document.getElementById("win").textContent = "Player 2 Wins";
                     game = false;
@@ -95,7 +100,7 @@
                 }
 
 
-                //rocarocarocarocarocarocarocarocarocarocarocaroca
+                //status ropa, al chocar contra una roca, ademas de ser arrastrado hacia abajo(en python), se parpadea.
                 if(status[0][0] != 0) {
                     document.getElementById("coche1").classList.add('blink');
                 }
@@ -108,7 +113,8 @@
                 if(status[1][0] == 0) {
                     document.getElementById("coche2").classList.remove('blink');
                 }
-                //cervezacervezacervezacervezacervezacervezacervezacerveza
+                //status cerveza(borracho), aqui hemos usado el index porque el efecto de inversion de mando solo se aplica
+                //al quien la coge.
                 if (status[0][1]==0 && index == 0){
                     cerveza = false
                 }
@@ -121,7 +127,7 @@
                 if (status[1][1]!=0 && index == 1){
                     cerveza = true
                 }
-                //pulpopulpopulpopulpopulpopulpopulpopulpopulpopulpo
+                //status pulpo, simplimente activa un div con id pulpoi cuando la coge
 
                 if (status[0][3]==0){
                     document.getElementById("pulpo1").style.opacity = 0;
@@ -146,6 +152,7 @@
             document.onkeydown = checkPress;
             function checkPress(evt) {
                 evt = evt || event;
+                //Esto envia un mesaje al servidor cuando pulsamos un boton, se distingue cuando esta borracho y cuando no.
                 if ((evt.keyCode == 37 && cerveza==false) ||  (evt.keyCode == 39 && cerveza==true)) {
                     evt.preventDefault();
                     var message = 'L';
@@ -160,7 +167,6 @@
                 }
                 if (evt.keyCode == 32) {
                     var text1 = document.getElementById("text1");
-
                     text1.style.opacity = 0;
                     var message = 'play';
                     var str1 = `{"go": "${message || 'default'}" }`;
